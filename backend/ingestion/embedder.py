@@ -1,20 +1,28 @@
 import sys
 import os
+import google.generativeai as genai
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from config import EMBEDDING_MODEL
-_model = None
+from config import GEMINI_API_KEY, GEMINI_EMBEDDING_MODEL
 
-def _get_model():
-    global _model
-    if _model is None:
-        from sentence_transformers import SentenceTransformer
-        _model = SentenceTransformer(EMBEDDING_MODEL)
-    return _model
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
 
 def embed_texts(texts):
-    model = _get_model()
-    embeddings = model.encode(texts, show_progress_bar=False, normalize_embeddings=True)
-    return embeddings.tolist()
+    if not GEMINI_API_KEY:
+        raise RuntimeError('GEMINI_API_KEY is required for document embeddings.')
+    result = genai.embed_content(
+        model=GEMINI_EMBEDDING_MODEL,
+        content=texts,
+        task_type='retrieval_document',
+    )
+    return result['embedding']
 
 def embed_query(text: str):
-    return embed_texts([text])[0]
+    if not GEMINI_API_KEY:
+        raise RuntimeError('GEMINI_API_KEY is required for query embeddings.')
+    result = genai.embed_content(
+        model=GEMINI_EMBEDDING_MODEL,
+        content=text,
+        task_type='retrieval_query',
+    )
+    return result['embedding']
