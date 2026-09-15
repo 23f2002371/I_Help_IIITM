@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CourseGenie — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-page">
+
+<!-- ── SIDEBAR ────────────────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <span class="logo-icon">🎓</span>
+      <span class="logo-text">CourseGenie</span>
+    </div>
+    <div class="iitm-badge">IITM BS</div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Navigation</div>
+    <a href="/" class="sidebar-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793z"/></svg>
+      Student Chat
+    </a>
+    <a href="/admin" class="sidebar-link active">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.892 3.433-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/></svg>
+      Admin Panel
+    </a>
+  </div>
+
+  <div class="sidebar-section sidebar-tips">
+    <div class="sidebar-label">Admin Tips</div>
+    <div class="tip-item">📁 Upload PDFs or paste links to index documents</div>
+    <div class="tip-item">🏷️ Use "Force course name" for single-course docs</div>
+    <div class="tip-item">🔄 Re-index after updating source files</div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="status-dot online"></div>
+    <span>Admin Mode</span>
+  </div>
+</aside>
+
+<!-- ── MAIN CONTENT ───────────────────────────────────────────── -->
+<main class="admin-main">
+
+  <!-- ── LOGIN WALL ─────────────────────────────────────────────────────────── -->
+  <div class="admin-login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-icon">🔐</div>
+      <h2>Admin Access</h2>
+      <p>Enter your admin password to manage course documents.</p>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="adminPassword" placeholder="Enter admin password" autocomplete="current-password">
+      </div>
+      <button id="loginBtn" class="btn-primary btn-full">Log In</button>
+      <div id="loginError" class="error-msg hidden"></div>
+    </div>
+  </div>
+
+  <!-- ── ADMIN CONTENT ──────────────────────────────────────────────────────── -->
+  <div id="adminContent" class="hidden">
+
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-title">Document Manager</h1>
+        <p class="admin-subtitle">Upload and manage course documents for the AI assistant</p>
+      </div>
+      <button class="btn-ghost" id="logoutBtn">Log out</button>
+    </div>
+
+    <!-- Stats row -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-value" id="statSources">—</div>
+        <div class="stat-label">Sources indexed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statChunks">—</div>
+        <div class="stat-label">Total chunks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statCourses">—</div>
+        <div class="stat-label">Courses detected</div>
+      </div>
+    </div>
+
+    <!-- Upload PDF -->
+    <div class="admin-card">
+      <div class="card-header">
+        <div class="card-icon">📄</div>
+        <div>
+          <h3>Upload PDF</h3>
+          <p>Upload a grading document, handbook, or policy PDF</p>
+        </div>
+      </div>
+
+      <div class="drop-zone" id="dropZone">
+        <div class="drop-zone-icon">📁</div>
+        <div class="drop-zone-text">Drag & drop a PDF here, or <span class="link-text">browse</span></div>
+        <input type="file" id="pdfFile" accept="application/pdf" hidden>
+        <div id="selectedFileName" class="selected-file hidden"></div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>Source name <span class="optional">(leave blank to use filename)</span></label>
+          <input type="text" id="pdfSourceName" placeholder="e.g. Grading Document 2026">
+        </div>
+        <div class="field">
+          <label>Topic tag <span class="optional">(optional)</span></label>
+          <input type="text" id="pdfTopic" placeholder="grading / deadlines / handbook">
+        </div>
+        <div class="field full-width">
+          <label>Force single course name <span class="optional">(leave blank to auto-detect multiple courses)</span></label>
+          <input type="text" id="pdfCourseName" placeholder="e.g. Business Analytics (Diploma in DS)">
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button id="uploadPdfBtn" class="btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/></svg>
+          Upload & Index
+        </button>
+        <div id="uploadProgress" class="progress-bar hidden">
+          <div class="progress-fill" id="uploadProgressFill"></div>
+        </div>
+      </div>
+      <div id="uploadStatus" class="status-toast hidden"></div>
+    </div>
+
+    <!-- Add Link -->
+    <div class="admin-card">
+      <div class="card-header">
+        <div class="card-icon">🔗</div>
+        <div>
+          <h3>Add Link</h3>
+          <p>Index a PDF URL or webpage directly</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field full-width">
+          <label>URL</label>
+          <input type="url" id="linkUrl" placeholder="https://...">
+        </div>
+        <div class="field">
+          <label>Content type</label>
+          <select id="linkType">
+            <option value="webpage">Webpage</option>
+            <option value="pdf">Direct PDF link</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Source name <span class="optional">(optional)</span></label>
+          <input type="text" id="linkSourceName" placeholder="e.g. Course Handbook">
+        </div>
+        <div class="field">
+          <label>Topic tag <span class="optional">(optional)</span></label>
+          <input type="text" id="linkTopic" placeholder="grading">
+        </div>
+        <div class="field full-width">
+          <label>Force course name <span class="optional">(optional)</span></label>
+          <input type="text" id="linkCourseName" placeholder="leave blank to auto-detect">
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button id="addLinkBtn" class="btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9q-.13 0-.25.031A2 2 0 0 1 7 9H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/><path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4 4 0 0 1-.82 1H12a3 3 0 1 0 0-6z"/></svg>
+          Fetch & Index
+        </button>
+      </div>
+      <div id="linkStatus" class="status-toast hidden"></div>
+    </div>
+
+    <!-- Sources table -->
+    <div class="admin-card">
+      <div class="card-header">
+        <div class="card-icon">📚</div>
+        <div>
+          <h3>Indexed Sources</h3>
+          <p>All documents currently available to the chatbot</p>
+        </div>
+        <button class="btn-ghost btn-sm" id="refreshSourcesBtn">↻ Refresh</button>
+      </div>
+
+      <div id="sourcesContainer">
+        <div class="empty-state" id="sourcesEmpty">
+          <div class="empty-icon">📭</div>
+          <div>No documents indexed yet</div>
+          <div class="empty-sub">Upload a PDF or add a link above to get started</div>
+        </div>
+        <table class="sources-table" id="sourcesTable" style="display:none">
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Type</th>
+              <th>Course(s)</th>
+              <th>Chunks</th>
+              <th>Last Indexed</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="sourcesTableBody"></tbody>
+        </table>
+      </div>
+      <div id="sourcesStatus" class="status-toast hidden"></div>
+    </div>
+
+  </div><!-- /adminContent -->
+
+</main>
+
+<!-- Toast notifications container -->
+<div id="toastContainer" class="toast-container"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
