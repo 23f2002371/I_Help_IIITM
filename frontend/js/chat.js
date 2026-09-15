@@ -1,6 +1,6 @@
 /* ── Chat JS ───────────────────────────────────────────────────────────────── */
 
-const BACKEND_URL = window.APP_CONFIG?.BACKEND_URL || 'https://your-render-app-name.onrender.com';
+const BACKEND_URL = window.APP_CONFIG?.BACKEND_URL || 'https://ihelp-backend-tkte.onrender.com';
 const API_URL = BACKEND_URL.replace(/\/$/, '');
 
 async function pingRenderWakeup() {
