@@ -1,5 +1,20 @@
 /* ── Chat JS ───────────────────────────────────────────────────────────────── */
 
+const BACKEND_URL = window.APP_CONFIG?.BACKEND_URL || 'https://your-render-app-name.onrender.com';
+
+async function pingRenderWakeup() {
+  if (!BACKEND_URL) return;
+  try {
+    await fetch(`${BACKEND_URL}/api/health`, { method: 'GET', cache: 'no-store' });
+  } catch (error) {
+    console.warn('Render wake-up ping failed:', error);
+  }
+}
+
+setInterval(pingRenderWakeup, 4 * 60 * 1000);
+window.addEventListener('focus', pingRenderWakeup);
+window.addEventListener('load', pingRenderWakeup);
+
 const inputEl       = document.getElementById('questionInput');
 const sendBtn       = document.getElementById('sendBtn');
 const messagesEl    = document.getElementById('chatMessages');
